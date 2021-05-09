@@ -1,0 +1,52 @@
+version: "3"
+
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    depends_on:
+      - api
+
+  client:
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    build:
+      context: ./client
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/.next
+
+  api:
+    restart: unless-stopped
+    build:
+      context: ./app
+    expose:
+      - 8000
+    env_file:
+      - ./.env
+    volumes:
+      - ./app:/app
+    command: >
+      sh -c "gunicorn config.wsgi:application --bind 0.0.0.0:8000"
+    depends_on:
+      - db
+
+  db:
+    restart: unless-stopped
+    # Образ и версия базы, которую мы будем использовать
+    image: postgres:12.0-alpine
+    ports:
+      - "5432:5432"
+    # Внешний том(volume) и место где он будет подключен внутри контейнера
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+
+volumes:
+  postgres_volume:
