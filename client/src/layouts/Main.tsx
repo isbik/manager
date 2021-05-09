@@ -39,7 +39,7 @@ const commonTheme: ThemeOptions = {
       "@global": {
         "*": {
           scrollbarColor: "#1a1144",
-          scrollbarWidth: "5px",
+          scrollbarWidth: "thin",
         },
         a: {
           textDecoration: "none",
