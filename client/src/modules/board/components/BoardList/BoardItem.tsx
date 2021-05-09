@@ -1,11 +1,10 @@
 import {
   Avatar,
+  Button,
   Icon,
-  IconButton,
   ListItem,
   ListItemIcon,
-  ListItemSecondaryAction,
-  ListItemText,
+  ListItemText
 } from "@material-ui/core";
 import { useStore } from "effector-react";
 import Link from "next/link";
@@ -32,11 +31,9 @@ export const BoardItem: React.FunctionComponent<IBoardItemProps> = ({
           {drawer && (
             <Link href={`/board/${board.id}/settings`}>
               <a>
-                <ListItemSecondaryAction>
-                  <IconButton className={classes.settingIcon} size="small">
-                    <Icon style={{ fontSize: "1rem" }}>settings</Icon>
-                  </IconButton>
-                </ListItemSecondaryAction>
+                <Button className={classes.settingButton} size="small">
+                  <Icon style={{ fontSize: "1rem" }}>settings</Icon>
+                </Button>
               </a>
             </Link>
           )}

@@ -17,10 +17,10 @@ const commonTheme: ThemeOptions = {
           color: "inherit",
         },
         "*::-webkit-scrollbar": {
-          width: "0.2em",
+          width: "0.1em",
         },
         "*::-webkit-scrollbar-track": {
-          "-webkit-box-shadow": "inset 0 0 6px rgba(0,0,0,0.00)",
+          "-webkit-box-shadow": "inset 0 0 2px rgba(0,0,0,0.00)",
         },
         "*::-webkit-scrollbar-thumb": {
           backgroundColor: "rgba(0,0,0,.5)",

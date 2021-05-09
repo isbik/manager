@@ -4,7 +4,7 @@ import {
   makeStyles,
   Theme,
   ThemeOptions,
-  ThemeProvider
+  ThemeProvider,
 } from "@material-ui/core/styles";
 import clsx from "clsx";
 import { useStore } from "effector-react";
@@ -39,20 +39,20 @@ const commonTheme: ThemeOptions = {
       "@global": {
         "*": {
           scrollbarColor: "#1a1144",
-          scrollbarWidth: "thin",
+          scrollbarWidth: "5px",
         },
         a: {
           textDecoration: "none",
           color: "inherit",
         },
         "*::-webkit-scrollbar": {
-          width: "0.1em",
+          width: "0.05em",
         },
         "*::-webkit-scrollbar-track": {
           "-webkit-box-shadow": "inset 0 0 6px rgba(0,0,0,0.00)",
         },
         "*::-webkit-scrollbar-thumb": {
-          height: 30,
+          height: 20,
           backgroundColor: "rgba(0,0,0,.5)",
         },
         ".none-outline": {
@@ -88,7 +88,7 @@ export default function Main({ children }) {
   const classes = useStyles();
   const drawer = useStore($drawer);
   const theme = useStore($theme);
-  const backgroundColor = useStore($backroundColor)
+  const backgroundColor = useStore($backroundColor);
   const appliedTheme = createMuiTheme(theme ? light : dark);
 
   return (
@@ -99,7 +99,10 @@ export default function Main({ children }) {
         <TheDrawer />
         <main
           style={{ backgroundColor: backgroundColor }}
-          className={classes.content}>{children}</main>
+          className={classes.content}
+        >
+          {children}
+        </main>
       </div>
     </ThemeProvider>
   );

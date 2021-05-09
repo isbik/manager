@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 
-const baseURL = "http://127.0.0.1:80/api/";
+const baseURL = process.env.REACT_API_URL;
 
 let token = null;
 

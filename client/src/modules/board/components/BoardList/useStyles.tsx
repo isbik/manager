@@ -9,29 +9,34 @@ export const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
   },
+
   listItemCount: {
-    marginLeft: theme.spacing(1.5),
-    width: theme.spacing(4),
-    height: theme.spacing(4),
-    fontSize: "0.75rem",
+    marginLeft: theme.spacing(2),
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+    fontSize: "0.75em",
     fontWeight: "bold",
-    background: "transparent",
+    textAlign: "center",
+    background: (props) => props.color,
     color: theme.palette.text.primary,
-    border: "3px solid",
-    borderColor: (props) => props.color,
   },
+
   listItemIcon: {
     width: theme.spacing(4),
     height: theme.spacing(4),
-    border: "2px solid",
+    "min-width": "auto",
+    border: "1px solid",
     "& span": {
-      fontSize: "0.8rem",
+      fontSize: "1rem",
     },
   },
-  settingIcon: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
-    background: theme.palette.background.paper,
+
+  settingButton: {
+    width: theme.spacing(4),
+    "min-width": "auto",
+    height: theme.spacing(4),
+    marginRight: theme.spacing(2),
+    background: theme.palette.success.light,
     "&:hover": {
       background: theme.palette.success.main,
     },

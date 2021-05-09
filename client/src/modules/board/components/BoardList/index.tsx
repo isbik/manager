@@ -62,10 +62,10 @@ export const BoardList: React.FunctionComponent<IBoardListProps> = ({}) => {
     <List dense style={{ paddingTop: 0 }}>
       <Box
         height="32px"
-        px={2}
+        px={drawer ? 2 : 1}
         my={2}
         display="flex"
-        justifyContent="space-evenly"
+        justifyContent="space-between"
       >
         {drawer ? (
           types.map((type) => <BoardTypeItem key={type.to} {...type} />)

@@ -1,4 +1,4 @@
-import { Icon, IconButton } from "@material-ui/core";
+import { Button, Icon } from "@material-ui/core";
 import clsx from "clsx";
 import { useStore } from "effector-react";
 import Link from "next/link";
@@ -25,9 +25,9 @@ export const BoardTypeItem: React.FunctionComponent<IBoardTypeItem> = ({
   return (
     <Link href={to}>
       <a onClick={closeDrawer}>
-        <IconButton className={clsx(classes.listItemIcon)}>
+        <Button className={clsx(classes.listItemIcon)}>
           <Icon>{icon}</Icon>
-        </IconButton>
+        </Button>
       </a>
     </Link>
   );
