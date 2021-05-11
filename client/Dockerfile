@@ -10,10 +10,11 @@ COPY ./package*.json ./
 RUN npm install --global pm2
 # Install dependencies
 RUN npm install 
-RUN npm run build
-
 # Copy all files
 COPY ./ ./
+
+RUN npm run build
+
 
 # Expose the listening port
 EXPOSE 3000
