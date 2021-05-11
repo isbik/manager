@@ -8,7 +8,6 @@ import {
   makeStyles,
   Theme,
 } from "@material-ui/core";
-import { Color, ColorPicker } from "material-ui-color";
 import { useRouter } from "next/router";
 import React from "react";
 import useDebounce from "../../../hooks/useDebounce";
@@ -60,16 +59,9 @@ export const ChangeColor: React.FC<IChangeColor> = React.memo(
     const router = useRouter();
     const id = +router.query.id;
 
-    const classes = useStyles();
-
     const [selectedColor, setSelectedColor] = React.useState(defaultColor);
     const [use_color, setUseColor] = React.useState(defaultUseColor);
     const [color, setColor] = React.useState(null);
-
-    const handleChange = (newValue: Color) => {
-      setColor(newValue);
-      setSelectedColor(null);
-    };
 
     const debounceColor = useDebounce(selectedColor || `#${color.hex}`, 1000);
 
@@ -117,12 +109,6 @@ export const ChangeColor: React.FC<IChangeColor> = React.memo(
               )}
             </Avatar>
           ))}
-          <div className={classes.pickerColor}>
-            <Icon color="primary" className={classes.settingsIcon}>
-              settings
-            </Icon>
-            <ColorPicker hideTextfield value={color} onChange={handleChange} />
-          </div>
         </Box>
 
         <FormControlLabel
