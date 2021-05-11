@@ -9,9 +9,8 @@ COPY ./package*.json ./
 # Install PM2 globally
 RUN npm install --global pm2
 # Install dependencies
-RUN npm install && \
-  npm cache clean --force && \
-  npm run build
+RUN npm install 
+RUN npm run build
 
 # Copy all files
 COPY ./ ./
