@@ -1,25 +1,22 @@
-import { Box, Button, Chip, Grid, Link, makeStyles } from "@material-ui/core";
+import { Box, Button, Chip, Grid } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import { useStore } from "effector-react";
+import Link from "next/link";
 import React from "react";
 import { $boards } from "../modules/board/state";
-const useStyles = makeStyles((theme) => ({}));
 
-const Blog = () => {
-  const classes = useStyles();
-
+const Home = () => {
   const boards = useStore($boards);
-  console.log(boards);
 
   return (
     <>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Typography gutterBottom variant="h4">
+        <Typography gutterBottom variant="h3">
           Ваши доски
         </Typography>
         <Grid container spacing={1}>
@@ -51,4 +48,4 @@ const Blog = () => {
   );
 };
 
-export default Blog;
+export default Home;

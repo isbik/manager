@@ -1,9 +1,11 @@
 import {
   Box,
   Button,
+  Card,
+  CardContent,
   CircularProgress,
   Fade,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,7 +17,6 @@ import { Alert } from "@material-ui/lab";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
-import { ManageIcon } from "../components/icons/ManageIcon";
 import Empty from "../layouts/Empty";
 import { GoogleAuth } from "../modules/user/GoogleAuth";
 import mainApi from "../services/APIService";
@@ -41,7 +42,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: "100vh",
+    height: "50vh",
+    minHeight: "300px",
     justifyContent: "center",
   },
   avatar: {
@@ -122,107 +124,117 @@ const Auth = () => {
           content="Создавай и организуй свои задачи, цели и привычки, лучший органайзер"
         ></meta>
       </Head>
-      <Grid container component="main" className={classes.root}>
+      <Grid
+        justify="center"
+        alignItems="center"
+        container
+        component="main"
+        className={classes.root}
+      >
         <CssBaseline />
-        <Grid item sm={6} className={classes.image}>
-          <ManageIcon />
-        </Grid>
+
         <Grid item xs={12} sm={6}>
-          <div className={classes.paper}>
-            <Typography gutterBottom component="h1" variant="h4">
-              {signIn ? "Добро пожаловать" : "Готовы присоедениться?"}
-            </Typography>
-            <Fade in={true} key={signIn + "test"}>
-              <form className={classes.form} noValidate onSubmit={handleSubmit}>
-                {error && (
-                  <Alert severity="error" onClose={() => setError("")}>
-                    {error}
-                  </Alert>
-                )}
-                {!signIn && (
+          <Card>
+            <CardContent className={classes.paper}>
+              <Typography gutterBottom component="h1" variant="h4">
+                {signIn ? "Добро пожаловать" : "Готовы присоедениться?"}
+              </Typography>
+              <Fade in={true} key={signIn + "test"}>
+                <form
+                  className={classes.form}
+                  noValidate
+                  onSubmit={handleSubmit}
+                >
+                  {error && (
+                    <Alert severity="error" onClose={() => setError("")}>
+                      {error}
+                    </Alert>
+                  )}
+                  {!signIn && (
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      size="small"
+                      fullWidth
+                      id="user_name"
+                      label="Как вас зовут?"
+                      name="user_name"
+                      autoComplete="user_name"
+                      value={form.user_name}
+                      onChange={handelChange}
+                    />
+                  )}
+
                   <TextField
                     variant="outlined"
                     margin="normal"
                     required
                     size="small"
                     fullWidth
-                    id="user_name"
-                    label="Как вас зовут?"
-                    name="user_name"
-                    autoComplete="user_name"
-                    value={form.user_name}
+                    id="email"
+                    label="Ваша почта"
+                    name="email"
+                    autoComplete="email"
+                    value={form.email}
                     onChange={handelChange}
                   />
-                )}
-
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  size="small"
-                  fullWidth
-                  id="email"
-                  label="Ваша почта"
-                  name="email"
-                  autoComplete="email"
-                  value={form.email}
-                  onChange={handelChange}
-                />
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  size="small"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Пароль"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  value={form.password}
-                  onChange={handelChange}
-                />
-                <Box display="flex" alignItems="center" marginY={1}>
-                  <GoogleAuth />
-                  <Button
-                    type="submit"
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    size="small"
+                    required
                     fullWidth
-                    variant="contained"
-                    color="primary"
-                    disabled={loading}
-                  >
-                    {loading && (
-                      <CircularProgress
-                        size={24}
-                        className={classes.buttonProgress}
-                      ></CircularProgress>
-                    )}
-                    Войти
-                  </Button>
-                </Box>
-
-                <Grid container>
-                  <Grid item xs>
-                    <Link color="initial" href="#" variant="body2">
-                      Забыли пароль?
-                    </Link>
-                  </Grid>
-                  <Grid item>
-                    <Link
-                      onClick={() => setSignIn(!signIn)}
-                      color="initial"
-                      href="#"
-                      variant="body2"
+                    name="password"
+                    label="Пароль"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    value={form.password}
+                    onChange={handelChange}
+                  />
+                  <Box display="flex" alignItems="center" marginY={1}>
+                    <GoogleAuth />
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      disabled={loading}
                     >
-                      {signIn
-                        ? "Ещё не с нами? Присоединиться"
-                        : "Уже были здесь? Войти"}
-                    </Link>
+                      {loading && (
+                        <CircularProgress
+                          size={24}
+                          className={classes.buttonProgress}
+                        ></CircularProgress>
+                      )}
+                      Войти
+                    </Button>
+                  </Box>
+
+                  <Grid container>
+                    <Grid item xs>
+                      <Link color="initial" href="#" variant="body2">
+                        Забыли пароль?
+                      </Link>
+                    </Grid>
+                    <Grid item>
+                      <Link
+                        onClick={() => setSignIn(!signIn)}
+                        color="initial"
+                        href="#"
+                        variant="body2"
+                      >
+                        {signIn
+                          ? "Ещё не с нами? Присоединиться"
+                          : "Уже были здесь? Войти"}
+                      </Link>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </form>
-            </Fade>
-          </div>
+                </form>
+              </Fade>
+            </CardContent>
+          </Card>
         </Grid>
       </Grid>
     </>

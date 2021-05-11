@@ -1,4 +1,11 @@
-import { Backdrop, Box, CardContent, CircularProgress, Typography } from "@material-ui/core";
+import {
+  Backdrop,
+  Box,
+  CardContent,
+  CircularProgress,
+  Divider,
+  Typography,
+} from "@material-ui/core";
 import { useStore } from "effector-react";
 import React, { useEffect } from "react";
 import { formatDate, weekDatesFromMonday } from "../../../../lib/date";
@@ -15,7 +22,7 @@ export const HabitTask: React.FunctionComponent<IHabitTask> = ({
   const classes = useStyles();
   const habitModel = React.useMemo(() => createHabitApi(), []);
   const sliderDay: Date = useStore(habitModel?.$sliderDay);
-  const { loading } = useStore(habitModel.$habitDayLoading)
+  const { loading } = useStore(habitModel.$habitDayLoading);
   const shortSliderDay: string = useStore(habitModel?.$shortSliderDay);
   const all_dates = useStore(habitModel.$dates);
 
@@ -27,7 +34,6 @@ export const HabitTask: React.FunctionComponent<IHabitTask> = ({
     };
 
     habitModel.$fetchHabitDays(params);
-
   }, [sliderDay]);
 
   const weekDays = React.useMemo(() => {
@@ -54,14 +60,14 @@ export const HabitTask: React.FunctionComponent<IHabitTask> = ({
           />
           <Box flexGrow={1} />
         </Box>
+        <Divider />
         <Box
           className={classes.days}
-          marginTop={1}
           display="flex"
           alignItems="center"
-          style={{ position: 'relative' }}
+          style={{ position: "relative" }}
         >
-          <Backdrop style={{ position: 'absolute', zIndex: 10 }} open={loading} >
+          <Backdrop style={{ position: "absolute", zIndex: 10 }} open={loading}>
             <CircularProgress color="inherit" />
           </Backdrop>
           {weekDays.map((day, index) => (
@@ -76,6 +82,7 @@ export const HabitTask: React.FunctionComponent<IHabitTask> = ({
           ))}
         </Box>
       </Box>
+      <Divider />
     </>
   );
 };

@@ -1,7 +1,15 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import {
+  Box,
+  Icon,
+  IconButton,
+  makeStyles,
+  Theme,
+  Typography,
+} from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
 import { Skeleton } from "@material-ui/lab";
 import { useStore } from "effector-react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import AddNewTask from "../../components/core/CreateNewTask";
@@ -20,7 +28,6 @@ import { ProgressCRUD } from "../../services/API/progress";
 import { TasksCRUD } from "../../services/API/tasks";
 import { $setBackgroundColor } from "../../store";
 import { TaskType } from "../../types/tasks";
-
 const useStyles = makeStyles((theme: Theme) => ({
   card: {
     position: "relative",
@@ -59,6 +66,10 @@ const Board = () => {
 
   const nameRef = React.useRef();
 
+  const currentBoard = React.useMemo(() => {
+    return boards.find(({ id: board_id }) => board_id === id);
+  }, [id, boards]);
+
   useEffect(() => {
     if (Number.isInteger(id) && (!boardCards[id] || boardCards[id]?.hasMore)) {
       if (drawer) {
@@ -69,9 +80,8 @@ const Board = () => {
     }
 
     if (id) {
-      const board = boards.find(({ id: board_id }) => board_id === id);
-      if (board?.use_color) {
-        $setBackgroundColor(board?.color || "transparent");
+      if (currentBoard?.use_color) {
+        $setBackgroundColor(currentBoard?.color || "transparent");
       }
     }
     return () => {
@@ -88,6 +98,27 @@ const Board = () => {
 
   return (
     <>
+      <Box display="flex" mb={1}>
+        <Link href="/">
+          <a>
+            <IconButton style={{ alignSelf: "flex-start", marginRight: 10 }}>
+              <Icon>arrow_back</Icon>
+            </IconButton>
+          </a>
+        </Link>
+
+        <Typography gutterBottom variant="h4">
+          {currentBoard?.name}
+        </Typography>
+
+        <Link href={`/board/${id}/settings`}>
+          <a style={{ alignSelf: "flex-start", marginLeft: "auto" }}>
+            <IconButton>
+              <Icon>settings</Icon>
+            </IconButton>
+          </a>
+        </Link>
+      </Box>
       <AddNewTask handleAdd={addTask} nameRef={nameRef} />
       {$fetchBoardCards.pending.getState() ? (
         <>

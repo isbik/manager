@@ -70,7 +70,9 @@ const AddNewTask: React.FunctionComponent<IAddNewTaskProps> = ({
     }
 
     handleAdd(task);
-
+    if (!only) {
+      setCurrentType(TaskType.text);
+    }
     setName("");
   };
 

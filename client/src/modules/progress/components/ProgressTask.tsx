@@ -42,7 +42,10 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
     width: "100%",
     zIndex: -1,
     background: theme.palette.divider,
+    transition: "all 0.5s",
     "&:before": {
+      transition: "all 0.5s",
+
       content: "''",
       display: "block",
       position: "absolute",
@@ -59,12 +62,12 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
       zIndex: 0,
       color: theme.palette.info.main,
       content: `'${props.procent}%'`,
-      fontSize: "3rem",
+      fontSize: "2rem",
       display: "block",
       position: "absolute",
-      left: "50%",
-      top: "50%",
-      transform: "translate(-50%, -50%)",
+      right: "5%",
+      top: "5%",
+      transform: "translate(-50% -50%)",
     },
   }),
   counterValue: {
@@ -97,7 +100,7 @@ export const ProgressTask: React.FunctionComponent<IProgressTask> = ({
   }, [debouncedChangeValue]);
 
   const progressLabel = React.useMemo(() => {
-    return has_limit ? `${currentValue} | ${total}` : currentValue;
+    return has_limit ? `${currentValue} из ${total}` : currentValue;
   }, [has_limit, currentValue]);
 
   const handleChange = (value) => {

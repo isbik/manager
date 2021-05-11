@@ -54,23 +54,20 @@ export const WeekDay: React.FC<IWeekDays> = React.memo(
     };
 
     return (
-      <Box
-        className={clsx(
-          classes.day,
-          isChecked && classes.dayActive,
-          isSameDay(day, today) && classes.today,
-          day.getTime() > today.getTime() && classes.dayDisabled
-        )}
-        onClick={() => handleClickDay()}
-      >
+      <Box className={classes.day} onClick={() => handleClickDay()}>
         <Typography variant="body2">{shortWeekDays[index]}</Typography>
         <Typography style={{ fontSize: "1.3rem" }}>{day.getDate()}</Typography>
-        <IconButton color="inherit" style={{ padding: 1 }}>
-          {isChecked ? (
-            <Icon>check_circle</Icon>
-          ) : (
-              <Icon>radio_button_unchecked</Icon>
-            )}
+        <IconButton
+          className={clsx(
+            classes.dayChecker,
+            isChecked && classes.dayActive,
+            isSameDay(day, today) && classes.today
+            // day.getTime() > today.getTime() && classes.dayDisabled
+          )}
+          color="inherit"
+          style={{ padding: 5 }}
+        >
+          <Icon>{isChecked ? "check_circle" : ""}</Icon>
         </IconButton>
         <IconButton color="inherit" style={{ padding: 1 }}></IconButton>
       </Box>
