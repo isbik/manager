@@ -15,7 +15,10 @@ class MyDocument extends Document {
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
           />
+          <meta property="og:type" content="website"></meta>
+
           <meta name="theme-color" content={theme.palette.primary.main} />
+          <meta property="og:url" content="http://165.227.141.60:3000/"></meta>
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
@@ -41,10 +44,6 @@ class MyDocument extends Document {
                 font-size: 1rem;
                 margin: 0;
                 padding: 0;
-              }
-              #__next {
-                height: 100vh;
-                width: 100vw;
               }
             `}
           </style>

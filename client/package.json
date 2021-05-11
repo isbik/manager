@@ -12,6 +12,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "axios": "^0.21.0",
+    "css-mediaquery": "^0.1.2",
     "dotenv": "^8.2.0",
     "effector": "^21.7.2",
     "effector-react": "^21.0.8",
@@ -25,7 +26,8 @@
     "react-masonry-component": "^6.2.1",
     "react-masonry-grid": "^1.0.17",
     "react-stack-grid": "^0.7.1",
-    "react-stonecutter": "^0.3.10"
+    "react-stonecutter": "^0.3.10",
+    "ua-parser-js": "^0.7.28"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

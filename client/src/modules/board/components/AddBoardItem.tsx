@@ -68,7 +68,7 @@ export const AddBoardItem: React.FC<Props> = ({ handleSearch }) => {
 
   const addBoard = () => {
     createBoard({ name: boardName, color: selectedColor }).then((response) => {
-      $addBoard(response.data);
+      $addBoard({ ...response.data, cards_count: 0 });
     });
 
     $setBoardName("");
