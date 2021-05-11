@@ -7,9 +7,9 @@ WORKDIR /usr/app
 COPY ./package*.json ./
 
 # Install PM2 globally
+RUN npm install --global pm2
 # Install dependencies
-RUN npm install --global pm2 && \
-  npm install && \
+RUN npm install && \
   npm cache clean --force && \
   npm run build
 
