@@ -7,9 +7,13 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import CustomUserSerializer
 
 
-class CustomUserCreate(APIView):
+class User(APIView):
     permission_classes = [AllowAny]
-
+    
+    def get(self, request):
+        print(request)
+        return 
+    
     def post(self, request, format='json'):
         serializer = CustomUserSerializer(data=request.data)
         if serializer.is_valid():

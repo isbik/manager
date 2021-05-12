@@ -107,7 +107,15 @@ const Board = () => {
           </a>
         </Link>
 
-        <Typography gutterBottom variant="h4">
+        <Typography
+          gutterBottom
+          variant="h4"
+          style={{
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+          }}
+        >
           {currentBoard?.name}
         </Typography>
 

@@ -1,12 +1,7 @@
 import cookie from "js-cookie";
 
 export const setCookie = (key, value) => {
-  if (process.browser) {
-    cookie.set(key, value, {
-      expires: 1,
-      path: "/",
-    });
-  }
+  cookie.set(key, value, { path: "/" });
 };
 
 export const removeCookie = (key) => {
@@ -24,12 +19,10 @@ export const getCookie = (key, req) => {
 };
 
 const getCookieFromBrowser = (key) => {
-  console.log("grabbing key from browser");
   return cookie.get(key);
 };
 
 const getCookieFromServer = (key, req) => {
-  console.log("grabbing key from server");
   if (!req.headers.cookie) {
     return undefined;
   }

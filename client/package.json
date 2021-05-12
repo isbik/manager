@@ -20,7 +20,7 @@
     "next": "10.0.1",
     "react": "17.0.1",
     "react-contenteditable": "^3.3.5",
-    "react-dom": "17.0.1",
+    "react-dom": "17.0.1"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

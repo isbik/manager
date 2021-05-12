@@ -1,52 +1,69 @@
-import { Button, CircularProgress, Grid, Typography } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  Icon,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { ChangeColor } from "../../../modules/board/BoardSettings/ChangeColor";
 import { ChangeName } from "../../../modules/board/BoardSettings/ChangeName";
 import { $deleteBoard } from "../../../modules/board/state";
 import { BoardCRUD } from "../../../services/API/board";
-
-
-
-
 const Settings = () => {
   const router = useRouter();
   const id = +router.query.id;
 
-  const [board, setBoard] = React.useState<any>({})
-  const [loading, setLoading] = React.useState(true)
+  const [board, setBoard] = React.useState<any>({});
+  const [loading, setLoading] = React.useState(true);
 
   useEffect(() => {
-
     if (id) {
-      setLoading(true)
-      BoardCRUD.get(id).then(response => {
-        setBoard(response.data)
-        setLoading(false)
-      }).catch(() => {
-        router.push('/')
-      })
+      setLoading(true);
+      BoardCRUD.get(id)
+        .then((response) => {
+          setBoard(response.data);
+          setLoading(false);
+        })
+        .catch(() => {
+          router.push("/");
+        });
     }
-  }, [id])
+  }, [id]);
 
   const deleteBoard = () => {
-    BoardCRUD.delete(id).then(() => {
-      router.push('/')
-      $deleteBoard(id)
-    }).catch(() => {
-      router.push('/')
-    })
-  }
-
-
+    BoardCRUD.delete(id)
+      .then(() => {
+        router.push("/");
+        $deleteBoard(id);
+      })
+      .catch(() => {
+        router.push("/");
+      });
+  };
 
   if (loading) {
-    return <CircularProgress />
+    return <CircularProgress />;
   }
 
   return (
     <Grid container>
-      <Typography gutterBottom variant="h4">Настройка доски</Typography>
+      <Box display="flex" mb={1}>
+        <Link href={`/board/${id}`}>
+          <a>
+            <IconButton style={{ alignSelf: "flex-start", marginRight: 10 }}>
+              <Icon>arrow_back</Icon>
+            </IconButton>
+          </a>
+        </Link>
+        <Typography gutterBottom variant="h4">
+          Настройка доски
+        </Typography>
+      </Box>
 
       <ChangeName name={board.name} />
       <ChangeColor color={board.color} use_color={board.use_color} />
@@ -68,7 +85,7 @@ const Settings = () => {
           Удалить доску
         </Button>
       </Grid>
-    </Grid >
+    </Grid>
   );
 };
 

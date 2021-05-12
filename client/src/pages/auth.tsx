@@ -19,6 +19,7 @@ import { useRouter } from "next/router";
 import React, { useCallback } from "react";
 import Empty from "../layouts/Empty";
 import { GoogleAuth } from "../modules/user/GoogleAuth";
+import { getAuthUser } from "../services/API/user";
 import mainApi from "../services/APIService";
 import JWTService from "../services/JWTService";
 
@@ -80,37 +81,34 @@ const Auth = () => {
     setForm({ ...form, [e.target.name]: e.target.value.trim() });
   };
 
-  const setTokens = useCallback((response) => {
-    JWTService.setToken(response.data.access);
-    JWTService.setRefreshToken(response.data.refresh);
+  const setTokens = useCallback(async ({ data }) => {
+    JWTService.setToken(data.access);
+    JWTService.setRefreshToken(data.refresh);
 
     mainApi.defaults.headers["Authorization"] = "JWT" + JWTService.getToken();
-    // router.push("/");
+    const response = await getAuthUser();
+    console.log(response);
+
+    router.push("/");
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    if (!signIn) {
-      mainApi
-        .post("/user/create/", form)
-        .then((response) => {
-          setTokens(response);
-        })
-        .catch((err) => {
-          setError(err);
-          setError("Введите форму правильно");
-        });
-    } else {
-      mainApi
-        .post("token/", form)
-        .then((response) => {
-          setTokens(response);
-        })
-        .catch((err) => {
-          setLoading(false);
-          setError("Неверный пароль или логин");
-        });
+
+    try {
+      let response = null;
+      if (!signIn) {
+        response = await mainApi.post("/user/create/", form);
+      } else {
+        response = await mainApi.post("token/", form);
+      }
+      await setTokens(response);
+    } catch {
+      JWTService.clearTokens();
+      setError("Неверный пароль или логин");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -137,7 +135,7 @@ const Auth = () => {
           <Card>
             <CardContent className={classes.paper}>
               <Typography gutterBottom component="h1" variant="h4">
-                {signIn ? "Добро пожаловать" : "Готовы присоедениться?"}
+                {signIn ? "Вход" : "Регистрация"}
               </Typography>
               <Fade in={true} key={signIn + "test"}>
                 <form
