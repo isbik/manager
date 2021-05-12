@@ -6,6 +6,8 @@ import {
   makeStyles,
   Theme,
 } from "@material-ui/core";
+import React from "react";
+
 const useStyles = makeStyles((theme: Theme) => ({
   card: {
     position: "relative",
@@ -37,6 +39,7 @@ export const CardWrapper: React.FC<ICardWrapper> = ({
   dense,
 }) => {
   const classes = useStyles();
+
   return (
     <Card variant="outlined" className={classes.card}>
       <Box p={dense ? 0 : 1}>{children}</Box>
@@ -44,6 +47,10 @@ export const CardWrapper: React.FC<ICardWrapper> = ({
         <IconButton onClick={() => deleteCard()} className={classes.actionIcon}>
           <Icon>close</Icon>
         </IconButton>
+
+        {/* <IconButton onClick={() => {}} className={classes.actionIcon}>
+          <Icon>low_priority</Icon>
+        </IconButton> */}
       </Box>
     </Card>
   );

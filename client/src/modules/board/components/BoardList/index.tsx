@@ -7,12 +7,13 @@ import {
   ListItem,
   ListItemText,
 } from "@material-ui/core";
-import { Skeleton } from "@material-ui/lab";
 import { useStore } from "effector-react";
 import React, { useEffect } from "react";
 import { $drawer, $toggleDrawer } from "../../../../components/TheDrawer/state";
-import { $boards, $fetchBoards } from "../../state";
+import { generate } from "../../../../lib/array";
+import { $boards, $boardsLoading, $fetchBoards } from "../../state";
 import { BoardItem } from "./BoardItem";
+import { BoardItemLoading } from "./BoardItemLoading";
 import { BoardTypeItem } from "./BoardTypeItem";
 import { useStyles } from "./useStyles";
 export interface IBoard {
@@ -27,6 +28,7 @@ interface IBoardListProps {}
 
 export const BoardList: React.FunctionComponent<IBoardListProps> = ({}) => {
   const boards = useStore($boards);
+  const loading = useStore($boardsLoading);
   const drawer = useStore($drawer);
 
   useEffect(() => {
@@ -79,7 +81,9 @@ export const BoardList: React.FunctionComponent<IBoardListProps> = ({}) => {
         )}
       </Box>
       <Divider />
-      {boards.length === 0 ? (
+      {loading ? (
+        <>{generate(5, <BoardItemLoading />)}</>
+      ) : boards.length === 0 ? (
         drawer && (
           <ListItem
             style={{ paddingLeft: 15 }}
@@ -89,12 +93,6 @@ export const BoardList: React.FunctionComponent<IBoardListProps> = ({}) => {
             <ListItemText>Доски не найдены</ListItemText>
           </ListItem>
         )
-      ) : $fetchBoards.pending.getState() ? (
-        <>
-          <Skeleton height={48} />
-          <Skeleton height={48} />
-          <Skeleton height={48} />
-        </>
       ) : (
         boards.map((board) => <BoardItem board={board} key={board.id} />)
       )}

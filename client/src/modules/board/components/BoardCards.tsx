@@ -31,6 +31,7 @@ const DELETE_ACTION = {
 export const BoardCards = ({ nameRef }) => {
   const router = useRouter();
   const boardCards = useStore($boardCards);
+
   const id = +router.query.id;
 
   const TaskComponent = (task: any) => {

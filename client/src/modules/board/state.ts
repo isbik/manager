@@ -3,12 +3,14 @@ import { getAllBoards, getBoardCards } from "../../services/API/board";
 import { IBoard } from "./components/BoardList";
 
 export const $boards = createStore<IBoard[]>([]);
+export const $boardsLoading = createStore(true);
 
 export const $addBoard = createEvent<IBoard>();
 export const $deleteBoard = createEvent<number>();
 export const $increaseBoardCardCount = createEvent<number>();
 export const $decreaseBoardCardCount = createEvent<number>();
 export const $updateBoard = createEvent<any>();
+
 export const $fetchBoards = createEffect({
   async handler() {
     const response = await getAllBoards();
@@ -59,6 +61,8 @@ export const $boardName = createStore<string>("").on(
   (_, name) => name
 );
 
+$boardsLoading.on($fetchBoards.done, () => false);
+
 $boards
   .on($addBoard, addBoard)
   .on($increaseBoardCardCount, increaseBoardCardCount)
@@ -67,12 +71,13 @@ $boards
   .on($updateBoard, updateBoard)
   .on($fetchBoards.done, setBoards);
 
-export const $fetchBoardCards = createEffect();
+export const $fetchBoardCards = createEffect<any>();
 export const $addCard = createEvent<any>();
 export const $deleteCard = createEvent<any>();
 
 // ***BOARD CARDS **//
 export const $boardCards = createStore<any>({});
+export const $boardCardsLoading = createStore(true);
 
 const setBoardCards = (state: any, payload: any) => {
   const newState = { ...state };
@@ -113,6 +118,14 @@ const deleteCard = (state, payload) => {
   );
   return newState;
 };
+
+$boardCardsLoading.on($fetchBoardCards.done, () => {
+  return false;
+});
+
+$boardCardsLoading.on($fetchBoardCards.pending, () => {
+  return $fetchBoardCards.pending.getState();
+});
 
 $boardCards
   .on($fetchBoardCards.done, setBoardCards)

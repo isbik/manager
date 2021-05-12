@@ -14,10 +14,12 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import AddNewTask from "../../components/core/CreateNewTask";
 import { $drawer, $toggleDrawer } from "../../components/TheDrawer/state";
+import { generate } from "../../lib/array";
 import { BoardCards } from "../../modules/board/components/BoardCards";
 import {
   $addCard,
   $boardCards,
+  $boardCardsLoading,
   $boards,
   $fetchBoardCards,
   $increaseBoardCardCount,
@@ -62,6 +64,8 @@ const Board = () => {
   const classes = useStyles();
   const drawer = useStore($drawer);
   const boardCards = useStore($boardCards);
+  const loadingCards = useStore($boardCardsLoading);
+
   const boards = useStore($boards);
 
   const nameRef = React.useRef();
@@ -128,27 +132,15 @@ const Board = () => {
         </Link>
       </Box>
       <AddNewTask handleAdd={addTask} nameRef={nameRef} />
-      {$fetchBoardCards.pending.getState() ? (
-        <>
+      {loadingCards ? (
+        generate(
+          5,
           <Skeleton
-            style={{ marginBottom: 10 }}
-            className={classes.card}
+            style={{ marginBottom: 15, borderRadius: 5 }}
             variant="rect"
-            height={40}
-          ></Skeleton>
-          <Skeleton
-            style={{ marginBottom: 10 }}
-            className={classes.card}
-            variant="rect"
-            height={40}
-          ></Skeleton>
-          <Skeleton
-            style={{ marginBottom: 10 }}
-            className={classes.card}
-            variant="rect"
-            height={40}
-          ></Skeleton>
-        </>
+            height={63}
+          />
+        )
       ) : (
         <>
           <BoardCards key={id} nameRef={nameRef} />
