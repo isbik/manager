@@ -23,19 +23,27 @@ export interface StyleProps {
 
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
   root: {
-    padding: "2px 4px",
     display: "flex",
     alignItems: "center",
-    // width: 200,
-    marginLeft: "auto",
   },
   iconButton: {
-    padding: 0,
-    height: "100%",
+    padding: theme.spacing(1),
+    height: 32,
+    width: 32,
+    borderRadius: theme.shape.borderRadius,
+  },
+  iconButtonSuccess: {
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+    color: theme.palette.success.main,
+  },
+  iconButtonError: {
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+    color: theme.palette.error.main,
   },
   divider: {
-    height: 20,
-    margin: 2,
+    height: 32,
   },
   progress: (props) => ({
     height: "100%",
@@ -45,7 +53,6 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
     transition: "all 0.5s",
     "&:before": {
       transition: "all 0.5s",
-
       content: "''",
       display: "block",
       position: "absolute",
@@ -62,14 +69,18 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
       zIndex: 0,
       color: theme.palette.info.main,
       content: `'${props.procent}%'`,
-      fontSize: "2rem",
+      fontSize: "3rem",
       display: "block",
       position: "absolute",
       right: "5%",
-      top: "5%",
-      transform: "translate(-50% -50%)",
+      top: "50%",
+      transform: "translateY(-50%)",
     },
   }),
+  chip: {
+    marginRight: theme.spacing(1),
+    borderRadius: theme.shape.borderRadius,
+  },
   counterValue: {
     width: 40,
     "& input": {
@@ -115,13 +126,13 @@ export const ProgressTask: React.FunctionComponent<IProgressTask> = ({
       <div className={clsx({ [classes.progress]: has_limit })}></div>
       <Box position="relative" zIndex={1}>
         <CardContent style={{ padding: 15 }}>
+          <Chip className={classes.chip} label={progressLabel}></Chip>
           {name}
           <Box mt={1} display="flex" alignItems="center">
-            <Chip label={progressLabel}></Chip>
             <Paper variant="outlined" className={classes.root}>
               <IconButton
                 type="submit"
-                className={classes.iconButton}
+                className={clsx(classes.iconButton, classes.iconButtonError)}
                 aria-label="search"
                 onClick={() => handleChange(-inputValue)}
               >
@@ -142,7 +153,7 @@ export const ProgressTask: React.FunctionComponent<IProgressTask> = ({
 
               <IconButton
                 type="submit"
-                className={classes.iconButton}
+                className={clsx(classes.iconButton, classes.iconButtonSuccess)}
                 aria-label="search"
                 onClick={() => handleChange(inputValue)}
               >

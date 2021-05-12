@@ -29,22 +29,20 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
 
-  dayChecker: (props) => ({
-    zIndex: 2,
-    background: theme.palette.success.light,
+  dayChecker: {
+    background: theme.palette.background.default,
     "&:hover": {
       background: theme.palette.success.light,
     },
-  }),
+  },
+
   dayActive: {
+    background: theme.palette.success.light,
     color: theme.palette.common.white,
   },
-  // dayDisabled: {
-  //   background: theme.palette.background.paper,
-  //   opacity: 0.6,
-  //   pointerEvents: "none",
-  // },
+
   today: {
+    background: theme.palette.info.light,
     color: theme.palette.info.main,
   },
 }));

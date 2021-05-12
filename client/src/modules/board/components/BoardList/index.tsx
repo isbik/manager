@@ -61,7 +61,7 @@ export const BoardList: React.FunctionComponent<IBoardListProps> = ({}) => {
   return (
     <List dense style={{ paddingTop: 0 }}>
       <Box
-        height="32px"
+        height="45px"
         px={drawer ? 2 : 1}
         my={2}
         display="flex"
