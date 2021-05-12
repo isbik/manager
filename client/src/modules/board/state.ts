@@ -71,7 +71,7 @@ $boards
   .on($updateBoard, updateBoard)
   .on($fetchBoards.done, setBoards);
 
-export const $fetchBoardCards = createEffect<any>();
+export const $fetchBoardCards = createEffect();
 export const $addCard = createEvent<any>();
 export const $deleteCard = createEvent<any>();
 
@@ -132,7 +132,7 @@ $boardCards
   .on($addCard, addCard)
   .on($deleteCard, deleteCard)
   .watch((state) => {
-    $fetchBoardCards.use(async (id: number) => {
+    $fetchBoardCards.use(async (id: any) => {
       const offset = state[id]?.offset || null;
 
       const response = await getBoardCards({

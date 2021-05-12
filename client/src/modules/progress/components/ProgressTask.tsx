@@ -9,7 +9,7 @@ import {
   makeStyles,
   Paper,
   Theme,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import clsx from "clsx";
 import React, { useState } from "react";
@@ -18,7 +18,8 @@ import { useEffectExceptOnMount } from "../../../hooks/useEffectExceptOnMount";
 import { ProgressCRUD } from "../../../services/API/progress";
 import { IProgressTask } from "../../../types/tasks";
 import { $updateProgress } from "../state";
-export interface StyleProps {
+
+interface StyleProps {
   procent: number;
 }
 
@@ -73,14 +74,15 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
       fontSize: "3rem",
       display: "block",
       position: "absolute",
-      right: "5%",
-      top: "50%",
+      right: "20px",
+      top: "55%",
       transform: "translateY(-50%)",
     },
   }),
   chip: {
-    alignSelf: 'flex-start'
+    alignSelf: "flex-start",
     marginRight: theme.spacing(1),
+    marginLeft: "auto",
     borderRadius: theme.shape.borderRadius,
   },
   counterValue: {
@@ -100,9 +102,16 @@ export const ProgressTask: React.FunctionComponent<IProgressTask> = ({
 }) => {
   const [currentValue, setCurrentValue] = useState(current);
   const [inputValue, setInputValue] = useState<number>(1);
-  const procent = Math.round(((currentValue * 100) / total) % 100);
-  const classes = useStyles({ procent });
   const debouncedChangeValue = useDebounce(currentValue, 1000);
+
+  const procent = React.useMemo(() => {
+    // Если значение больше 100% то начинать отсчет заново
+    const value = Math.round((currentValue * 100) / total);
+    const divided = value % 100;
+    return value >= 100 && divided === 0 ? 100 : divided;
+  }, [currentValue]);
+
+  const classes = useStyles({ procent });
 
   useEffectExceptOnMount(() => {
     ProgressCRUD.patch(id, {
