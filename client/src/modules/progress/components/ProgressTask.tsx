@@ -9,6 +9,7 @@ import {
   makeStyles,
   Paper,
   Theme,
+  Typography
 } from "@material-ui/core";
 import clsx from "clsx";
 import React, { useState } from "react";
@@ -78,6 +79,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
     },
   }),
   chip: {
+    alignSelf: 'flex-start'
     marginRight: theme.spacing(1),
     borderRadius: theme.shape.borderRadius,
   },
@@ -126,8 +128,10 @@ export const ProgressTask: React.FunctionComponent<IProgressTask> = ({
       <div className={clsx({ [classes.progress]: has_limit })}></div>
       <Box position="relative" zIndex={1}>
         <CardContent style={{ padding: 15 }}>
-          <Chip className={classes.chip} label={progressLabel}></Chip>
-          {name}
+          <Box display="flex">
+            <Typography>{name}</Typography>
+            <Chip className={classes.chip} label={progressLabel}></Chip>
+          </Box>
           <Box mt={1} display="flex" alignItems="center">
             <Paper variant="outlined" className={classes.root}>
               <IconButton
