@@ -98,7 +98,7 @@ export const ProgressTask: React.FunctionComponent<IProgressTask> = ({
 }) => {
   const [currentValue, setCurrentValue] = useState(current);
   const [inputValue, setInputValue] = useState<number>(1);
-  const procent = Math.round((currentValue * 100) / total);
+  const procent = Math.round(((currentValue * 100) / total) % 100);
   const classes = useStyles({ procent });
   const debouncedChangeValue = useDebounce(currentValue, 1000);
 
